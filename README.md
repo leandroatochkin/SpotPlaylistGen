@@ -1,6 +1,6 @@
 # 🎵 Spotify OAuth Starter App  
 
-A full-stack application that demonstrates how to authenticate with **Spotify** using OAuth2.  
+A full-stack application that translates lines of text into Spotify playlists.  
 The app has a **React (Vite) frontend** and a **Node.js + Express backend** with session management.  
 
 ---

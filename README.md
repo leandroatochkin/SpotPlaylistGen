@@ -51,6 +51,9 @@ SPOTIFY_CLIENT_ID=your_spotify_client_id
 SPOTIFY_CLIENT_SECRET=your_spotify_client_secret
 SPOTIFY_REDIRECT_URI=http://127.0.0.1:4000/callback
 SESSION_SECRET=supersecret
+SPOTIFY_ACCOUNTS=https://accounts.spotify.com
+API_BASE=https://api.spotify.com/v1
+
 ```
 
 

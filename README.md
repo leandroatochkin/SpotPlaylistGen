@@ -1,4 +1,4 @@
-# 🎵 Spotify OAuth Starter App  
+# 🎵 Spotify Playlist Generator App  
 
 A full-stack application that translates lines of text into Spotify playlists.  
 The app has a **React (Vite) frontend** and a **Node.js + Express backend** with session management.  

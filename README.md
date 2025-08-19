@@ -72,8 +72,6 @@ Go to http://127.0.0.1:5173
 
 Click Login with Spotify → redirected to Spotify auth
 
-After login, redirected back to frontend
-
-UI updates with your Spotify profile info
+After login, the input fields are enabled
 
 Click Logout → session destroyed, redirected back to frontend

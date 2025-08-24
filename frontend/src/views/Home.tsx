@@ -1,14 +1,16 @@
 // PlaylistCreator.tsx (React + fetch)
 import { useState, useEffect } from "react";
+import type { PlaylistResponse } from "../utils/interfaces";
 
 export default function PlaylistCreator() {
-  const [text, setText] = useState("");
-  const [result, setResult] = useState<any>(null);
+  const [text, setText] = useState<string>("");
+  const [result, setResult] = useState<PlaylistResponse | null>(null);
   const [playlistName, setPlaylistName]=useState<string>('')
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const [isCreating, setIsCreating] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
+  const [isCreating, setIsCreating] = useState<boolean>(false)
+  const [error, setError] = useState<boolean>(false)
 
-  const backend = "http://127.0.0.1:4000";
+  const backend = import.meta.env.VITE_BACKEND_URL;
 
   // open login in same tab — server redirects back to frontend
   const handleLogin = () => {
@@ -38,7 +40,7 @@ export default function PlaylistCreator() {
 
     const handleLogout = async () => {
     try {
-      const resp = await fetch('http://127.0.0.1:4000/logout', {
+      const resp = await fetch(`${backend}/logout`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -56,7 +58,7 @@ export default function PlaylistCreator() {
     setIsCreating(true);
     const lines = text.split("\n").map(l => l.trim()).filter(Boolean);
     try {
-      const resp = await fetch('http://127.0.0.1:4000/create-playlist', {
+      const resp = await fetch(`${backend}/create-playlist`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -65,14 +67,27 @@ export default function PlaylistCreator() {
         body: JSON.stringify({ songs: lines, name: playlistName, public: false })
         })
       const data = await resp.json();
+      if(data.error){
+        setError(true);
+        setResult(null);
+        if (data.error === 'No tracks matched') alert('No se encontraron coincidencias para las canciones proporcionadas. Intenta ser más específico con los nombres de las canciones y artistas.');
+        throw new Error(data.error);
+      }
       setResult(data);
     } catch (err) {
+      setError(true);
       console.error(err);
-      setResult({ err });
     } finally {
       setIsCreating(false);
     }
   };
+
+  useEffect(() => {
+    if(error){
+      const timer = setTimeout(() => setError(false), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [error])
   
 
   const styles = {
@@ -185,7 +200,7 @@ export default function PlaylistCreator() {
     createButton: {
       width: "100%",
       padding: "12px",
-      backgroundColor: "#22c55e",
+      backgroundColor: error ? "#c4271fff" : '#22c55e',
       color: "#000000",
       border: "none",
       borderRadius: "6px",
@@ -234,7 +249,7 @@ export default function PlaylistCreator() {
 
   return (
     <div style={styles.container}>
-      <style jsx>{`
+      <style>{`
         @keyframes spin {
           0% { transform: rotate(0deg); }
           100% { transform: rotate(360deg); }
@@ -314,7 +329,7 @@ export default function PlaylistCreator() {
                 Creando Playlist...
               </>
             ) : (
-              <>♪ Crear Playlist</>
+              error ? '× Error' : '♪ Crear Playlist'
             )}
           </button>
 

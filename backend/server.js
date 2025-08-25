@@ -12,7 +12,7 @@ import logout from './api/routes/logout/logout.js'
 
 dotenv.config();
 
-app.set("trust proxy", 1);
+
 
 const {
   FRONTEND_URI,
@@ -21,6 +21,7 @@ const {
 } = process.env;
 
 const app = express();
+app.set("trust proxy", 1);
 app.use(express.json());
 
 // Allow requests from frontend and include cookies

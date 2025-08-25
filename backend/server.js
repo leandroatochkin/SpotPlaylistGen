@@ -12,10 +12,12 @@ import logout from './api/routes/logout/logout.js'
 
 dotenv.config();
 
+app.set("trust proxy", 1);
+
 const {
-  FRONTEND_URI = "http://localhost:5173",
-  PORT = 4000,
-  SESSION_SECRET = "dev-secret"
+  FRONTEND_URI,
+  PORT,
+  SESSION_SECRET
 } = process.env;
 
 const app = express();

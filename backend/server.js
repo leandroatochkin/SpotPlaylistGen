@@ -47,8 +47,8 @@ app.use(session({
   name: 'connect.sid', // Use default session name
   cookie: {
   maxAge: 24*60*60*1000,
-  sameSite: "lax",
-  secure: false
+  sameSite: "none",
+  secure: true // Set to true if using HTTPS
 }
 }));
 

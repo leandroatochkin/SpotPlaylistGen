@@ -315,13 +315,13 @@ export default function PlaylistCreator() {
 
           <button
             onClick={handleCreate}
-            disabled={!isLoggedIn || !playlistName.trim() || !text.trim() || isCreating}
+            disabled={!isLoggedIn || !playlistName.trim() || !text.trim() || isCreating || error}
             style={{
               ...styles.createButton,
               ...(!isLoggedIn || !playlistName.trim() || !text.trim() || isCreating
                 ? styles.createButtonDisabled
                 : {}),
-            }}
+            }}          
           >
             {isCreating ? (
               <>
